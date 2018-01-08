@@ -463,7 +463,6 @@ app.on('before-quit', event => {
       event.preventDefault();
       showingAutoUpdateCloseAlert = true;
       dialog.showMessageBox({
-        type: "info",
         title: "LBRY will upgrade",
         message: "Please select \"Yes\" at the upgrade prompt shown after the app closes.",
       }, () => {
