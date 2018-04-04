@@ -15,7 +15,10 @@ const select = (state, props) => {
   let metadata;
   let isResolvingUri;
 
-  const pendingPublish = selectPendingPublish(props.uri)(state);
+  let pendingPublish;
+  if (props.checkForPending) {
+    pendingPublish = selectPendingPublish(props.uri)(state);
+  }
 
   const fileCardInfo = pendingPublish || {
     claim: makeSelectClaimForUri(props.uri)(state),

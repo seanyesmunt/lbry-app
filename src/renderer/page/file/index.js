@@ -40,7 +40,7 @@ const perform = dispatch => ({
   fetchCostInfo: uri => dispatch(doFetchCostInfoForUri(uri)),
   checkSubscription: subscription => dispatch(doCheckSubscription(subscription)),
   openModal: (modal, props) => dispatch(doOpenModal(modal, props)),
-  prepareEdit: publishData => dispatch(doPrepareEdit(publishData)),
+  prepareEdit: (publishData, uri) => dispatch(doPrepareEdit(publishData, uri)),
 });
 
 export default connect(select, perform)(FilePage);

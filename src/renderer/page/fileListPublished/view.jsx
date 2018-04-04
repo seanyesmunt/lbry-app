@@ -18,7 +18,7 @@ class FileListPublished extends React.PureComponent {
     return (
       <Page notContained>
         {fileInfos.length ? (
-          <FileList fileInfos={fileInfos} sortByHeight />
+          <FileList checkForPending fileInfos={fileInfos} sortByHeight />
         ) : (
           <div className="page__empty">
             {__("It looks like you haven't published anything to LBRY yet.")}

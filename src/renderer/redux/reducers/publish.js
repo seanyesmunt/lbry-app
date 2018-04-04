@@ -68,7 +68,6 @@ export type PublishParams = {
   channel: string,
   title: string,
   contentIsFree: boolean,
-  uri: string,
   license: ?string,
   licenseUrl: ?string,
   price: {

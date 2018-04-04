@@ -165,7 +165,7 @@ class FilePage extends React.Component<Props> {
                       icon={icons.EDIT}
                       label={__('Edit')}
                       onClick={() => {
-                        prepareEdit(claim);
+                        prepareEdit(claim, uri);
                         navigate('/publish');
                       }}
                     />

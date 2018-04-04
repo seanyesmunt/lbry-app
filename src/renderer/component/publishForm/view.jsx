@@ -70,11 +70,11 @@ class PublishForm extends React.PureComponent<Props> {
     (this: any).handleNameChange = this.handleNameChange.bind(this);
     (this: any).handleChannelChange = this.handleChannelChange.bind(this);
     (this: any).editExistingClaim = this.editExistingClaim.bind(this);
-    (this: any).getNewUri = this.getNewUri.bind(this);
+    (this: any).updateUri = this.updateUri.bind(this);
   }
 
-  // Returns a new uri to be used in the form and begins to resolve that uri for bid help text
-  getNewUri(name: string, channel: string) {
+  // Begins to resolve that uri for bid help text
+  updateUri(name: string, channel: string) {
     const { resolveUri } = this.props;
     // If they are midway through a channel creation, treat it as anonymous until it completes
     const channelName = channel === CHANNEL_ANONYMOUS || channel === CHANNEL_NEW ? '' : channel;
@@ -88,10 +88,7 @@ class PublishForm extends React.PureComponent<Props> {
 
     if (uri) {
       resolveUri(uri);
-      return uri;
     }
-
-    return '';
   }
 
   handleFileChange(filePath: string, fileName: string) {
@@ -104,9 +101,8 @@ class PublishForm extends React.PureComponent<Props> {
 
     if (!name) {
       const parsedFileName = fileName.replace(regexInvalidURI, '');
-      const uri = this.getNewUri(parsedFileName, channel);
+      this.updateUri(parsedFileName, channel);
       newFileParams.name = parsedFileName;
-      newFileParams.uri = uri;
     }
 
     updatePublishForm(newFileParams);
@@ -128,10 +124,9 @@ class PublishForm extends React.PureComponent<Props> {
       return;
     }
 
-    const uri = this.getNewUri(name, channel);
+    this.updateUri(name, channel);
     updatePublishForm({
       name,
-      uri,
       nameError: undefined,
     });
   }
@@ -139,8 +134,8 @@ class PublishForm extends React.PureComponent<Props> {
   handleChannelChange(channelName: string) {
     const { name, updatePublishForm } = this.props;
     if (name) {
-      const uri = this.getNewUri(name, channelName);
-      updatePublishForm({ channel: channelName, uri });
+      this.updateUri(name, channelName);
+      updatePublishForm({ channel: channelName });
     } else {
       updatePublishForm({ channel: channelName });
     }
@@ -160,9 +155,9 @@ class PublishForm extends React.PureComponent<Props> {
   }
 
   editExistingClaim() {
-    const { myClaimForUri, prepareEdit, scrollToTop } = this.props;
+    const { myClaimForUri, prepareEdit, scrollToTop, uri } = this.props;
     if (myClaimForUri) {
-      prepareEdit(myClaimForUri);
+      prepareEdit(myClaimForUri, uri);
       scrollToTop();
     }
   }
@@ -233,6 +228,8 @@ class PublishForm extends React.PureComponent<Props> {
       const { source } = myClaimForUri.value.stream;
       publishParams.source = source;
     }
+
+    debugger;
 
     publish(publishParams);
   }

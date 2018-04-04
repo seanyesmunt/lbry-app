@@ -29,8 +29,9 @@ export const doUpdatePublishForm = (publishFormValue: UpdatePublishFormData) => 
     data: { ...publishFormValue },
   });
 
-export const doPrepareEdit = (claim: any) => (dispatch: Dispatch) => {
+export const doPrepareEdit = (claim: any, uri: string) => (dispatch: Dispatch) => {
   const { name, amount, channel_name: channelName, value: { stream: { metadata } } } = claim;
+
   const {
     author,
     description,
@@ -63,6 +64,7 @@ export const doPrepareEdit = (claim: any) => (dispatch: Dispatch) => {
     nsfw,
     thumbnail,
     title,
+    uri,
   };
 
   dispatch({ type: ACTIONS.DO_PREPARE_EDIT, data: publishData });
@@ -120,13 +122,15 @@ export const doPublish = (params: PublishParams): ThunkAction => {
     publishPayload.sources = source;
   }
 
+  debugger;
+
   return (dispatch: Dispatch) => {
     dispatch({ type: ACTIONS.PUBLISH_START });
 
     const success = () => {
       dispatch({
         type: ACTIONS.PUBLISH_SUCCESS,
-        data: { pendingPublish: publishPayload },
+        data: { pendingPublish: { ...publishPayload, uri } }, // add the uri for edits
       });
       dispatch(doOpenModal(MODALS.PUBLISH, { uri }));
     };

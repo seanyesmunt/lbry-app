@@ -14,7 +14,7 @@ import PublishPage from './view';
 
 const select = (state, props) => {
   const publishState = selectPublishFormValues(state);
-  const { uri, name } = publishState;
+  const { name, channel } = publishState;
 
   const resolvingUris = selectResolvingUris(state);
   let isResolvingUri = false;
@@ -24,6 +24,10 @@ const select = (state, props) => {
 
   const claimsByUri = selectClaimsByUri(state);
   const myClaims = selectMyClaims(state);
+
+  // If they are editing, the uri will be the long form
+  if (props.editingURI) {
+  }
 
   const claimForUri = claimsByUri[uri];
   let winningBidForClaimUri;
@@ -50,7 +54,7 @@ const perform = dispatch => ({
   resolveUri: uri => dispatch(doResolveUri(uri)),
   publish: params => dispatch(doPublish(params)),
   navigate: path => dispatch(doNavigate(path)),
-  prepareEdit: claim => dispatch(doPrepareEdit(claim)),
+  prepareEdit: (claim, uri) => dispatch(doPrepareEdit(claim, uri)),
 });
 
 export default connect(select, perform)(PublishPage);

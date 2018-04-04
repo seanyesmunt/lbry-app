@@ -14,13 +14,21 @@ export const selectPublishFormValues = createSelector(selectState, state => {
 
 export const selectPendingPublish = uri =>
   createSelector(selectPendingPublishes, pendingPublishes => {
-    const { claimName, contentName } = parseURI(uri);
-
     if (!pendingPublishes.length) {
       return null;
     }
+    const { claimName, channelName, isChannel } = parseURI(uri);
+    console.log('\n\n\npending');
+    console.log(uri, parseURI(uri));
 
-    return pendingPublishes.filter(
-      publish => publish.name === claimName || publish.name === contentName
-    )[0];
+    // debugger;
+    return pendingPublishes.filter(publish => {
+      console.log('publish', publish);
+      if (!isChannel) {
+        return publish.name === claimName;
+      } else {
+        return publish.name === claimName && publish.channel === channelName;
+      }
+      // return publish.name === claimName
+    })[0];
   });
