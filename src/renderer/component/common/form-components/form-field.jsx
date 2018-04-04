@@ -2,7 +2,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import SimpleMDE from 'react-simplemde-editor';
-import style from 'react-simplemde-editor/dist/simplemde.min.css'; // eslint-disable-line no-unused-vars
 
 type Props = {
   name: string,
