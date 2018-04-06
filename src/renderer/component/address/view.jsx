@@ -4,6 +4,7 @@ import { clipboard } from 'electron';
 import { FormRow } from 'component/common/form';
 import Button from 'component/button';
 import * as icons from 'constants/icons';
+import QRCode from 'component/common/qr-code';
 
 type Props = {
   address: string,
@@ -46,6 +47,7 @@ export default class Address extends React.PureComponent<Props> {
             doShowSnackBar({ message: __('Address copied') });
           }}
         />
+        <QRCode value={address || ''} />
       </FormRow>
     );
   }
